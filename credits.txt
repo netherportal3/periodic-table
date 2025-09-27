@@ -1,0 +1,9 @@
+credits:
+
+https://github.com/Bowserinator/Periodic-Table-JSON (all of my data)
+https://cssgrid-generator.netlify.app (writing out all 118 grid elements)
+https://images.netherportal3.com/u/wmuWlN.png - cool screenshot of the app running out of colors, guess they didn't anticipate someone wanting a massive grid. 
+
+https://modelviewer.dev - 3d model viewing, was linked in the periodic-table-json project as a good way to view the 3d models in that json.
+https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined - google material symbols font for the close button.
+https://storage.googleapis.com/search-ar-edu/periodic-table/ - google's periodic table 3D models and images
