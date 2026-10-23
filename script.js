@@ -104,30 +104,35 @@ document.addEventListener('DOMContentLoaded', function() {
       closeElementPopup();
     }
   });
-});
 
-fetch(src)
-  .then(r => r.json())
-  .then(data => {
-    elementsData = data.elements; 
-    
-    data.elements.forEach(el => {
-      const box = document.querySelector('.div' + el.number);
-      if (!box) return;
-      
-      const tile = document.createElement('div');
-      tile.className = 'tile';
-      tile.style.backgroundColor = '#' + el['cpk-hex']; // using the colors from the json file.
-      tile.innerHTML =
-        '<div class="num">' + el.number + '</div>' +
-        '<div class="sym">' + el.symbol + '</div>' +
-        '<div class="name">' + el.name + '</div>' +
-        '<div class="mass">' + fmtMass(el.atomic_mass) + '</div>';
-      
-      tile.addEventListener('click', function() {
-        showElementPopup(el);
+  // fetch has to run AFTER the .div1..118 placeholders exist, otherwise
+  // querySelector('.div' + el.number) returns null for every element and
+  // no tiles get rendered (black screen). The <script type="module"> for
+  // model-viewer in <head> delays DOMContentLoaded, so top-level fetches
+  // can resolve first and lose the race.
+  fetch(src)
+    .then(r => r.json())
+    .then(data => {
+      elementsData = data.elements;
+
+      data.elements.forEach(el => {
+        const box = document.querySelector('.div' + el.number);
+        if (!box) return;
+
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.style.backgroundColor = '#' + el['cpk-hex']; // using the colors from the json file.
+        tile.innerHTML =
+          '<div class="num">' + el.number + '</div>' +
+          '<div class="sym">' + el.symbol + '</div>' +
+          '<div class="name">' + el.name + '</div>' +
+          '<div class="mass">' + fmtMass(el.atomic_mass) + '</div>';
+
+        tile.addEventListener('click', function() {
+          showElementPopup(el);
+        });
+
+        box.appendChild(tile);
       });
-      
-      box.appendChild(tile);
     });
-  });
+});
